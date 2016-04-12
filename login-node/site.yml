@@ -1,0 +1,9 @@
+---
+
+- name:
+  hosts: all
+  tasks:
+
+    - name: update system
+      yum:
+        
