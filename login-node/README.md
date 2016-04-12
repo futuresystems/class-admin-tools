@@ -24,10 +24,19 @@ Initially, this came about for the FutureSystems fg491 when attempting to transi
 1. start an instance on OpenStack
 
    ```
-   nova boot --image $IMAGE --flavor m1.small --key-name $HOSTNAME --nix net-id=$(nova network-list | grep ${OS_PROJECT_NAME}-net | awk '{print $2}')
+   nova boot \
+     --image $IMAGE \
+     --flavor m1.small \
+     --key-name $HOSTNAME \
+     --nic net-id=$(nova network-list | grep "${OS_PROJECT_NAME}-net" | awk '{print $2}') \
+     $NAME
    ```
+
+   where:
    
-   where `$IMAGE` is appropriately replaced with a CentOS7 image.
+   - `$IMAGE` is appropriately replaced with a CentOS7 image.
+   - `$HOSTNAME` is the key name (I name my keys by the hostname of the machine on which they reside)
+   - `$NAME` is the instance name, eg `login`
    
 1. assign a floating ip
 
