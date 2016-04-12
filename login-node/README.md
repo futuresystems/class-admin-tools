@@ -46,10 +46,16 @@ Initially, this came about for the FutureSystems fg491 when attempting to transi
    echo $FLOATING_IP >inventory
    ```
    
+1. run a sanity check ping
+
+   ```
+   ansible all -m ping -u $CLOUD_USER
+   ```
+
 1. run ansible to deploy
 
    ```
-   ansible-playbook site.yml -l $CLOUD_USER
+   ansible-playbook site.yml -u $CLOUD_USER
    ```
    
    where `$CLOUD_USER` is the username to use to log into the VM.

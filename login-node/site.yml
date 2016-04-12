@@ -1,9 +1,61 @@
 ---
 
-- name:
+################################################################################
+
+- name: Provide Python dev tools
   hosts: all
+  become: yes
+  vars:
+    pydevtools:
+      - python
+      - python-pip
+      - python-virtualenv
+      - python-devel
+  tasks:
+    - yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ pydevtools }}"
+
+
+################################################################################
+
+- name: Provide Version control tools
+  hosts: all
+  become: yes
+  vars:
+    vcstools:
+      - git
+  tasks:
+    - yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ vcstools }}"
+
+
+################################################################################
+
+- name: Add users
+  hosts: all
+  vars:
+    public_keys_dir: public_keys
+    users_file: users.txt
+    users: "{{ lookup('pipe', 'cat ' + users_file).split('\n') }}"
+
   tasks:
 
-    - name: update system
-      yum:
-        
+    - name: create users
+      become: yes
+      user:
+        name: "{{ item }}"
+        state: present
+        createhome: yes
+        system: no
+      with_items: "{{ users }}"
+
+    - name: allow users to login
+      become: yes
+      authorized_key:
+        user: "{{ item }}"
+        key: "{{ lookup('pipe', 'for f in '+public_keys_dir+'/'+item+'/*; do cat $f;echo;done') }}"
+      with_items: "{{ users }}"
