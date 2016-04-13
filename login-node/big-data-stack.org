@@ -89,6 +89,9 @@
      (bds) badi@login big-data-stack $ nano .cluster.py
      #+END_EXAMPLE
   3. Change =remote_user= from =ubuntu= to =cc= in =ansible.cfg=
+     #+BEGIN_EXAMPLE
+     (bds) badi@login big-data-stack $ nano ansible.cfg
+     #+END_EXAMPLE
 
   You can now boot the virtual cluster and deploy onto it as shown in the [[https://github.com/futuresystems/big-data-stack][Big Data Stack Readme]]:
   #+BEGIN_EXAMPLE
