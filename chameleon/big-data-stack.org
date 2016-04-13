@@ -1,0 +1,116 @@
+#+OPTIONS: toc:nil
+
+* Summary
+
+  We have prepared an alternative environment (Chameleon) for students developing with the Big Data Stack.
+  Chameleon Cloud provide an environment for experimenting with cloud environment.
+  They provide an OpenStack Kilo cloud that can be used for development.
+  We do not control Chameleon, and the resource provided are very kindly made available for this class.
+  Please be good citizens use the resources responsibly.
+  This means no floating ip allocations, a limit of 3 instances per group, and deleting any unused instances.
+
+  There are some differences between FutureSystems OpenStack and Chameleon OpenStack.
+
+  - small pool of floating ips
+  - different login usernames (=cc= for all instead of =ubuntu=, =centos=, etc) for the images
+  - limited resource availability
+  - resource usage is charged to a finite allocation
+
+
+* Getting Access
+
+  1. Create an account on [[https://www.chameleoncloud.org/][Chameleon Cloud]]
+  2. Send your Chameleon username to bdosspcoursehelp@googlegroups.com
+     Note: the subject *MUST* be
+     #+BEGIN_EXAMPLE
+     Chameleon Cloud Access
+     #+END_EXAMPLE
+  3. We will then add you to the project for this course
+
+
+* Usage
+
+  Since there are currently few floating ips available, we have set up a login node that you can access as a proxy.
+
+  In order to use Chameleon for Big Data Stack you need:
+  - a Chameleon Cloud account
+  - a FutureSystems account with ssh keys uploaded
+  - github.com account
+
+  You will need to ssh into the login node and do your work from there.
+  The =login= node is to Chameleon what =india= is to FutureSystems.
+
+
+* Setup instructions
+
+  1. Ssh into the =login= node on Chameleon we have set up for you:
+     #+BEGIN_EXAMPLE
+     $ ssh \
+         -o UserKnownHostsFile=/dev/null \
+         -o StrictHostKeyChecking=no \
+         $FUTURESYSTEMS_USER_NAME@129.114.110.178
+     #+END_EXAMPLE
+     where =$FUTURESYSTEMS_USER_NAME= is your FutureSystems portal name.
+  2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file
+  3. Upload this openrc file to the =login= node
+  4. *on the* =login= *node*: create an ssh keypair
+     #+BEGIN_EXAMPLE
+     badi@login ~ $ ssh-keygen -t rsa -b 4096 -C "$USER@login CC"
+     #+END_EXAMPLE
+  5. Upload this key to your [[https://github.com/settings/ssh][profile on github.com]]
+     #+BEGIN_EXAMPLE
+     badi@login ~ $ cat ~/.ssh/id_rsa.pub
+     #+END_EXAMPLE
+  6. Source the openrc file
+     #+BEGIN_EXAMPLE
+     badi@login ~ $ source ~/CH-817724-openrc.sh
+     #+END_EXAMPLE
+  7. Create a virtualenv
+     #+BEGIN_EXAMPLE
+     badi@login ~ $ virtualenv bds
+     badi@login ~ $ source bds/bin/activate
+     #+END_EXAMPLE
+  8. Upgrade pip
+     #+BEGIN_EXAMPLE
+     $ (bds) badi@login ~ $ pip install -U pip
+     #+END_EXAMPLE
+
+  At this point you can download the Big Data Stack.
+  You will need modify the =.cluster.py= and =ansible.cfg= files to specify the correct image and user:
+
+  1. Clone the big-data-stack and install the dependencies
+     #+BEGIN_EXAMPLE
+     (bds) badi@login ~ $ git clone --recursive git@github.com:futuresystems/big-data-stack.git
+     (bds) badi@login ~ $ cd big-data-stack
+     (bds) badi@login big-data-stack $ pip install -r requirements.txt
+     #+END_EXAMPLE
+  2. Use the Chameleon Cloud Ubuntu image by changing =defaults/openstack/image= in =.cluster.py= to =CC-Ubuntu14.04=
+     #+BEGIN_EXAMPLE
+     (bds) badi@login big-data-stack $ nano .cluster.py
+     #+END_EXAMPLE
+  3. Change =remote_user= from =ubuntu= to =cc= in =ansible.cfg=
+     #+BEGIN_EXAMPLE
+     (bds) badi@login big-data-stack $ nano ansible.cfg
+     #+END_EXAMPLE
+
+  You can now boot the virtual cluster and deploy onto it as shown in the [[https://github.com/futuresystems/big-data-stack][Big Data Stack Readme]]:
+  #+BEGIN_EXAMPLE
+  (bds) badi@login big-data-stack $ vcl boot -p openstack -P $USER-bds-
+  #+END_EXAMPLE
+
+
+* Notes
+
+** Upgrading =pip=
+
+   This needs to be done because the version of =pip= provided is old (version 1.4.1).
+   The current version at the time of this writing is 8.1.1.
+   If you don't upgrade pip you may see errors regarding a failure to find the =pytz= package when you install the big-data-stack =requirements.txt=.
+
+** =apt= related errors
+
+  You may occasionally get an error when one of the tasks calls to apt, either to update the cache or install packages.
+  This will likely manifest as a =Failed to fetch= with an =Error 403 Forbidden= error.
+  The root cause for this is not yet known, but it seems related to a network saturation issue.
+  Nonetheless, the workaround is simple: rerun the playbook that failed.
+  This may need to be repeated a few times, but this has been sufficient to resolve the issue when I encounter them.
