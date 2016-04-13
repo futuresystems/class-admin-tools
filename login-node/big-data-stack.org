@@ -23,7 +23,7 @@
   2. Send your Chameleon username to bdosspcoursehelp@googlegroups.com
      Note: the subject *MUST* be
      #+BEGIN_EXAMPLE
-     BDOSSP16 CHAMELEON CLOUD USERNAME
+     Chameleon Cloud Access
      #+END_EXAMPLE
   3. We will then add you to the project for this course
 
