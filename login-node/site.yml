@@ -2,35 +2,29 @@
 
 ################################################################################
 
-- name: Provide Python dev tools
+- name: Provide useful packages
   hosts: all
   become: yes
-  vars:
-    pydevtools:
-      - python
-      - python-pip
-      - python-virtualenv
-      - python-devel
   tasks:
-    - yum:
-        name: "{{ item }}"
+    - name: Install "{{ item.description }}"
+      yum:
+        name: "{{ item.packages }}"
         state: present
-      with_items: "{{ pydevtools }}"
-
-
-################################################################################
-
-- name: Provide Version control tools
-  hosts: all
-  become: yes
-  vars:
-    vcstools:
-      - git
-  tasks:
-    - yum:
-        name: "{{ item }}"
-        state: present
-      with_items: "{{ vcstools }}"
+      with_items:
+        - description: Python development tools
+          packages:
+            - python
+            - python-pip
+            - python-virtualenv
+            - python-devel
+        - description: Version control tools
+          packages:
+            - git
+        - description: Editors
+          packages:
+            - emacs-nox
+            - vim-enhanced
+            - nano
 
 
 ################################################################################
