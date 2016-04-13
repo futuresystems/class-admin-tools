@@ -40,8 +40,6 @@
   You will need to ssh into the login node and do your work from there.
   The =login= node is to Chameleon what =india= is to FutureSystems.
 
-  There are more details on usage following.
-  
 
 * Setup instructions
 
