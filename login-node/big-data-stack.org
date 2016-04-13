@@ -98,6 +98,14 @@
 
 * Notes
 
+** Upgrading =pip=
+
+   This needs to be done because the version of =pip= provided is old (version 1.4.1).
+   The current version at the time of this writing is 8.1.1.
+   If you don't upgrade pip you may see errors regarding a failure to find the =pytz= package when you install the big-data-stack =requirements.txt=.
+
+** =apt= related errors
+
   You may occasionally get an error when one of the tasks calls to apt, either to update the cache or install packages.
   This will likely manifest as a =Failed to fetch= with an =Error 403 Forbidden= error.
   The root cause for this is not yet known, but it seems related to a network saturation issue.
