@@ -45,8 +45,12 @@
 
   1. Ssh into the =login= node on Chameleon we have set up for you:
      #+BEGIN_EXAMPLE
-     $ ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $FUTURESYSTEMS_USER_NAME@129.114.110.178
+     $ ssh \
+         -o UserKnownHostsFile=/dev/null \
+         -o StrictHostKeyChecking=no \
+         $FUTURESYSTEMS_USER_NAME@129.114.110.178
      #+END_EXAMPLE
+     where =$FUTURESYSTEMS_USER_NAME= is your FutureSystems portal name.
   2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file
   3. Upload this openrc file to the =login= node
   4. *on the* =login= *node*: create an ssh keypair
