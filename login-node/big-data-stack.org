@@ -21,7 +21,10 @@
 
   1. Create an account on [[https://www.chameleoncloud.org/][Chameleon Cloud]]
   2. Send your Chameleon username to bdosspcoursehelp@googlegroups.com
-     Note: the subject *MUST* be =BDOSSP16 CHAMELEON CLOUD USERNAME=
+     Note: the subject *MUST* be
+     #+BEGIN_EXAMPLE
+     BDOSSP16 CHAMELEON CLOUD USERNAME
+     #+END_EXAMPLE
   3. We will then add you to the project for this course
 
 
