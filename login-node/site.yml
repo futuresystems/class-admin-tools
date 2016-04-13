@@ -6,7 +6,7 @@
   hosts: all
   become: yes
   tasks:
-    - name: Install "{{ item.description }}"
+    - name: Install packages
       yum:
         name: "{{ item.packages }}"
         state: present
