@@ -16,6 +16,16 @@
   - limited resource availability
   - resource usage is charged to a finite allocation
 
+** Quotas
+
+   - Instances: 55
+   - VCPUs: 110
+   - RAM: 220 GB
+   - Floating IP: 0 (while 55 in the quota, only one is currently available, and it is already in use)
+   - Security Groups: 10
+   - Volumes: 10
+   - Volume Storage 1000 GB
+
 
 * Getting Access
 
