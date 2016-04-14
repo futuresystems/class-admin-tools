@@ -35,7 +35,7 @@
      #+BEGIN_EXAMPLE
      Chameleon Cloud Access
      #+END_EXAMPLE
-  3. We will then add you to the project for this course
+  3. We will then add you to the project for this course. *IMPORTANT*: you will not be able to use Chameleon until you are added. We will reply to your request with a confirmation email.
 
 
 * Usage
