@@ -63,6 +63,9 @@
      where =$FUTURESYSTEMS_USER_NAME= is your FutureSystems portal name.
   2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file
   3. Upload this openrc file to the =login= node
+     #+BEGIN_EXAMPLE
+     $ scp CH-817724-openrc.sh 129.114.110.178:~
+     #+END_EXAMPLE
   4. *on the* =login= *node*: create an ssh keypair
      #+BEGIN_EXAMPLE
      badi@login ~ $ ssh-keygen -t rsa -b 4096 -C "$USER@login CC"
