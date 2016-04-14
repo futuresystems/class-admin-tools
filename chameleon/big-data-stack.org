@@ -45,7 +45,7 @@
   In order to use Chameleon for Big Data Stack you need:
   - a Chameleon Cloud account
   - a FutureSystems account with ssh keys uploaded
-  - github.com account
+  - github.com account. *IMPORTANT* this is [[github.com]] *NOT* [[github.iu.edu]]
 
   You will need to ssh into the login node and do your work from there.
   The =login= node is to Chameleon what =india= is to FutureSystems.
