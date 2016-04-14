@@ -25,6 +25,7 @@
    - Security Groups: 10
    - Volumes: 10
    - Volume Storage 1000 GB
+   - 20,000 SUs (see [[https://www.chameleoncloud.org/docs/user-faq/#toc-what-are-the-units-of-an-allocation-and-how-am-i-charged-][here]] for SU details)
 
 
 * Getting Access
