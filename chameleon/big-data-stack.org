@@ -2,9 +2,9 @@
 
 * Summary
 
-  We have prepared an alternative environment (Chameleon) for students developing with the Big Data Stack.
-  Chameleon Cloud provide an environment for experimenting with cloud environment.
-  They provide an OpenStack Kilo cloud that can be used for development.
+  We have prepared an alternative environment (on Chameleoncloud) for students developing with the Big Data Stack.
+  Chameleon Cloud provides an environment for experimenting with cloud environments.
+  Currently, chamelen provide an OpenStack IaaS based on the Liberty release. 
   We do not control Chameleon, and the resource provided are very kindly made available for this class.
   Please be good citizens use the resources responsibly.
   This means no floating ip allocations, a limit of 3 instances per group, and deleting any unused instances.
@@ -14,7 +14,7 @@
   - small pool of floating ips
   - different login usernames (=cc= for all instead of =ubuntu=, =centos=, etc) for the images
   - limited resource availability
-  - resource usage is charged to a finite allocation
+  - resource usage is charged to a finite allocation (thus you need to terminate your instances if you do not use them).
 
 ** Quotas
 
