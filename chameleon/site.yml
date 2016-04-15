@@ -74,13 +74,13 @@
 
 ################################################################################
 
-- name: Harden
+- name: Access Control
   hosts: all
   become: yes
   vars:
     users_file: users.txt
     users: "{{ lookup('pipe', 'cat ' + users_file).split('\n') }}"
-  tags: harden
+  tags: access_control
   handlers:
     - name: Restart SSHD
       service:
@@ -106,4 +106,17 @@
         # - PermitEmptyPasswords: "no"
         # - ClientAliveInterval: "{{ 60*60 }}"
         # - ClientAliveCountMax: 0
+      notify: Restart SSHD
+
+    - name: mask reverse dns lookup errors
+      # Augustine Joseph reported a "reverse mapping checking getaddrinfo" error.
+      # see here for more details
+      # https://access.redhat.com/solutions/83933
+      sshd_config:
+        option: "{{ item.key }}"
+        value: "{{ item.value }}"
+        validate: "sshd -t -f"
+      with_dict:
+        UseDNS: "no"
+        GSSAPIAuthentication: "no"
       notify: Restart SSHD
