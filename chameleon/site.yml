@@ -5,6 +5,7 @@
 - name: Provide useful packages
   hosts: all
   become: yes
+  tags: install_packages
   tasks:
     - name: Install packages
       yum:
@@ -29,17 +30,17 @@
 
 ################################################################################
 
-- name: Add users
+- name: Setup users
   hosts: all
+  become: yes
   vars:
     public_keys_dir: public_keys
     users_file: users.txt
     users: "{{ lookup('pipe', 'cat ' + users_file).split('\n') }}"
-
+  tags: setup_users
   tasks:
 
     - name: create users
-      become: yes
       user:
         name: "{{ item }}"
         state: present
@@ -48,7 +49,6 @@
       with_items: "{{ users }}"
 
     - name: allow users to login
-      become: yes
       authorized_key:
         user: "{{ item }}"
         key: "{{ lookup('pipe', 'for f in '+public_keys_dir+'/'+item+'/*; do cat $f;echo;done') }}"
