@@ -48,8 +48,62 @@
         system: no
       with_items: "{{ users }}"
 
+    - name: unlock authorized_keys
+      shell: "chattr -i ~{{ item }}/.ssh/authorized_keys || exit 0"
+      with_items: "{{ users }}"
+
     - name: allow users to login
       authorized_key:
         user: "{{ item }}"
         key: "{{ lookup('pipe', 'for f in '+public_keys_dir+'/'+item+'/*; do cat $f;echo;done') }}"
       with_items: "{{ users }}"
+
+    - name: lock permissions on authorized_keys
+      file:
+        path: "~{{ item }}/.ssh/authorized_keys"
+        owner: root
+        group: root
+        mode: 0444
+        state: file
+      with_items: "{{ users }}"
+
+    - name: make authorized_keys immutable
+      command: "chattr +i ~{{ item }}/.ssh/authorized_keys"
+      with_items: "{{ users }}"
+
+
+################################################################################
+
+- name: Harden
+  hosts: all
+  become: yes
+  vars:
+    users_file: users.txt
+    users: "{{ lookup('pipe', 'cat ' + users_file).split('\n') }}"
+  tags: harden
+  handlers:
+    - name: Restart SSHD
+      service:
+        name: sshd
+        state: restarted
+  tasks:
+
+    - name: Secure sshd
+      sshd_config:
+        option: "{{ item.key }}"
+        value: "{{ item.value }}"
+        validate: "sshd -t -f"
+      with_dict:
+        Protocol: 2
+        PermitRootLogin: "no"
+        PasswordAuthentication: "no"
+        PubKeyAuthentication: "yes"
+        LoginGraceTime: 10
+        AllowUsers: "{{ ansible_ssh_user }} {{ users | join(' ') }}"
+        IgnoreRhosts: "yes"
+        HostbasedAuthentication: "no"
+        LogLevel: "INFO"
+        # - PermitEmptyPasswords: "no"
+        # - ClientAliveInterval: "{{ 60*60 }}"
+        # - ClientAliveCountMax: 0
+      notify: Restart SSHD
