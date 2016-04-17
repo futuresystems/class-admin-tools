@@ -26,6 +26,9 @@
             - emacs-nox
             - vim-enhanced
             - nano
+        - description: Support X11 forwarding
+          packages:
+            - xauth
 
 
 ################################################################################
@@ -106,6 +109,7 @@
         # - PermitEmptyPasswords: "no"
         # - ClientAliveInterval: "{{ 60*60 }}"
         # - ClientAliveCountMax: 0
+        X11Forwarding: "yes"
       notify: Restart SSHD
 
     - name: mask reverse dns lookup errors
