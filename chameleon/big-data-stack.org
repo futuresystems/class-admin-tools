@@ -12,7 +12,6 @@
 
   There are some differences between FutureSystems OpenStack and Chameleon OpenStack.
 
-  - small pool of floating ips
   - different login usernames (=cc= for all instead of =ubuntu=, =centos=, etc) for the images
   - limited resource availability
   - resource usage is charged to a finite allocation (thus you need to terminate your instances if you do not use them).
