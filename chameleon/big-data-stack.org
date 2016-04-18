@@ -22,10 +22,9 @@
    - Instances: 55
    - VCPUs: 110
    - RAM: 220 GB
-   - Floating IP: 0 (while 55 in the quota, only one is currently available, and it is already in use)
+   - Floating IP: 55
    - Security Groups: 10
    - Volumes: 10
-   - Volume Storage 1000 GB
    - 20,000 SUs (see [[https://www.chameleoncloud.org/docs/user-faq/#toc-what-are-the-units-of-an-allocation-and-how-am-i-charged-][here]] for SU details)
 
 
@@ -40,65 +39,30 @@
   3. We will then add you to the project for this course. *IMPORTANT*: you will not be able to use Chameleon until you are added. We will reply to your request with a confirmation email.
 
 
-* Usage
-
-  Since there are currently few floating ips available, we have set up a login node that you can access as a proxy.
-
-  In order to use Chameleon for Big Data Stack you need:
-  - a Chameleon Cloud account
-  - a FutureSystems account with ssh keys uploaded
-  - github.com account. *IMPORTANT* this is [[github.com]] *NOT* [[github.iu.edu]]
-
-  You will need to ssh into the login node and do your work from there.
-  The =login= node is to Chameleon what =india= is to FutureSystems.
-
-
 * Setup instructions
 
-  1. Ssh into the =login= node on Chameleon we have set up for you:
-     #+BEGIN_EXAMPLE
-     $ ssh \
-         -o UserKnownHostsFile=/dev/null \
-         -o StrictHostKeyChecking=no \
-         $FUTURESYSTEMS_USER_NAME@129.114.110.178
-     #+END_EXAMPLE
-     where =$FUTURESYSTEMS_USER_NAME= is your FutureSystems portal name.
+  1. Ssh into =india.futuresystems.org=:
   2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file
-  3. Upload this openrc file to the =login= node
+  3. Upload this openrc file to the =india= node
      #+BEGIN_EXAMPLE
-     $ scp CH-817724-openrc.sh 129.114.110.178:~
+     $ scp CH-817724-openrc.sh india.futuresystems.org:~
      #+END_EXAMPLE
-  4. *on the* =login= *node*: create an ssh keypair
+  4. Upload upload your india ssh key to your [[https://github.com/settings/ssh][profile on github.com]]
      #+BEGIN_EXAMPLE
-     badi@login ~ $ ssh-keygen -t rsa -b 4096 -C "$USER@login CC"
+     badi@i136 ~ $ cat ~/.ssh/id_rsa.pub
      #+END_EXAMPLE
-  5. Upload this key to your [[https://github.com/settings/ssh][profile on github.com]]
+  5. Source the openrc file (*only* the chameleon openrc file):
      #+BEGIN_EXAMPLE
-     badi@login ~ $ cat ~/.ssh/id_rsa.pub
+     badi@i136 ~ $ source ~/CH-817724-openrc.sh
      #+END_EXAMPLE
-  6. Source the openrc file
+  6. Load the OpenStack module (same as with kilo on india):
      #+BEGIN_EXAMPLE
-     badi@login ~ $ source ~/CH-817724-openrc.sh
-     #+END_EXAMPLE
-  7. Create a virtualenv
-     #+BEGIN_EXAMPLE
-     badi@login ~ $ virtualenv bds
-     badi@login ~ $ source bds/bin/activate
-     #+END_EXAMPLE
-  8. Upgrade pip
-     #+BEGIN_EXAMPLE
-     $ (bds) badi@login ~ $ pip install -U pip
+     badi@i136 ~ $ module load openstack
      #+END_EXAMPLE
 
-  At this point you can download the Big Data Stack.
-  You will need modify the =.cluster.py= and =ansible.cfg= files to specify the correct image and user:
+  At this point you the nova commands will control Chameleon.
+  For BDS, you will need modify the =.cluster.py= and =ansible.cfg= files to specify the correct Chameleon Cloud image and user:
 
-  1. Clone the big-data-stack and install the dependencies
-     #+BEGIN_EXAMPLE
-     (bds) badi@login ~ $ git clone --recursive git@github.com:futuresystems/big-data-stack.git
-     (bds) badi@login ~ $ cd big-data-stack
-     (bds) badi@login big-data-stack $ pip install -r requirements.txt
-     #+END_EXAMPLE
   2. Use the Chameleon Cloud Ubuntu image by changing =defaults/openstack/image= in =.cluster.py= to =CC-Ubuntu14.04=
      #+BEGIN_EXAMPLE
      (bds) badi@login big-data-stack $ nano .cluster.py
@@ -108,19 +72,10 @@
      (bds) badi@login big-data-stack $ nano ansible.cfg
      #+END_EXAMPLE
 
-  You can now boot the virtual cluster and deploy onto it as shown in the [[https://github.com/futuresystems/big-data-stack][Big Data Stack Readme]]:
-  #+BEGIN_EXAMPLE
-  (bds) badi@login big-data-stack $ vcl boot -p openstack -P $USER-bds-
-  #+END_EXAMPLE
+  You can now follow the [[https://github.com/futuresystems/big-data-stack][Big Data Stack Readme]] for starting and deploying your BDS
 
 
 * Notes
-
-** Upgrading =pip=
-
-   This needs to be done because the version of =pip= provided is old (version 1.4.1).
-   The current version at the time of this writing is 8.1.1.
-   If you don't upgrade pip you may see errors regarding a failure to find the =pytz= package when you install the big-data-stack =requirements.txt=.
 
 ** =apt= related errors
 
