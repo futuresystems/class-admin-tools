@@ -5,7 +5,7 @@
 
   We have prepared an alternative environment (on Chameleoncloud) for students developing with the Big Data Stack.
   Chameleon Cloud provides an environment for experimenting with cloud environments.
-  Currently, chamelen provide an OpenStack IaaS based on the Liberty release. 
+  Currently, Chameleon provides an OpenStack IaaS based on the Liberty release. 
   We do not control Chameleon, and the resource provided are very kindly made available for this class.
   Please be good citizens use the resources responsibly.
   This means a limit of 3 instances per group and deleting any unused instances.
