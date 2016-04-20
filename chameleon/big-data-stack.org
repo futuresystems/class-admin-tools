@@ -46,7 +46,7 @@
      #+BEGIN_EXAMPLE
      $ scp CH-817724-openrc.sh india.futuresystems.org:~
      #+END_EXAMPLE
-  4. Upload upload your india ssh key to your [[https://github.com/settings/ssh][profile on github.com]]
+  4. Upload your india ssh key to your [[https://github.com/settings/ssh][profile on github.com]]
      #+BEGIN_EXAMPLE
      badi@i136 ~ $ cat ~/.ssh/id_rsa.pub
      #+END_EXAMPLE
