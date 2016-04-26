@@ -44,7 +44,7 @@
   2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file
   3. Upload this openrc file to the =india= node
      #+BEGIN_EXAMPLE
-     $ scp CH-817724-openrc.sh india.futuresystems.org:~
+     $ scp CH-817724-openrc.sh $PORTALID@india.futuresystems.org:~
      #+END_EXAMPLE
   4. Upload your india ssh key to your [[https://github.com/settings/ssh][profile on github.com]]
      #+BEGIN_EXAMPLE
