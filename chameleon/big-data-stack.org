@@ -62,10 +62,11 @@
   At this point you the nova commands will control Chameleon.
   For BDS, you will need modify the =.cluster.py= and =ansible.cfg= files to specify the correct Chameleon Cloud image and user:
 
-  2. Use the Chameleon Cloud Ubuntu image by changing =defaults/openstack/image= in =.cluster.py= to =CC-Ubuntu14.04=
+  1. Use the Chameleon Cloud Ubuntu image by changing =defaults/openstack/image= in =.cluster.py= to =CC-Ubuntu14.04=
      #+BEGIN_EXAMPLE
      (bds) badi@login big-data-stack $ nano .cluster.py
      #+END_EXAMPLE
+  2. Set =create_floating_ip= to =True= in =.cluster.py= (under =image= from the previous step)
   3. Change =remote_user= from =ubuntu= to =cc= in =ansible.cfg=
      #+BEGIN_EXAMPLE
      (bds) badi@login big-data-stack $ nano ansible.cfg
