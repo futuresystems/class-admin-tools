@@ -41,7 +41,7 @@
 * Setup instructions
 
   1. Ssh into =india.futuresystems.org=:
-  2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file (check under the `API Access` tab)
+  2. Go to the [[https://openstack.tacc.chameleoncloud.org/dashboard/project/access_and_security/][Chameleon Cloud OpenStack Dashboard]] and download the openrc file (check under the =API Access= tab)
   3. Upload this openrc file to the =india= node
      #+BEGIN_EXAMPLE
      $ scp CH-817724-openrc.sh $PORTALID@india.futuresystems.org:~
